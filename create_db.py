@@ -29,6 +29,13 @@ def main():
 
 
 
+def readFromFile(path):
+    inputfilename = path
+    with open(inputfilename) as inputfile:
+        for line in inputfile:
+
+
+
 
 if __name__ == '__main__':
     main(sys.argv)
