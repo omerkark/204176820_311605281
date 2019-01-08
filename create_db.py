@@ -32,7 +32,10 @@ def readFromFile(path):
     inputfilename = path
     with open(inputfilename) as inputfile:
         for line in inputfile:
-            print(line)
+            print(line.strip(" "))
+
+
+
 
 def main(args):
     readFromFile(args[1])
