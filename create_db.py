@@ -26,14 +26,18 @@ def intelizeTables():
                                 current_course_id INTEGER NOT NULL,
                                 current_course_time_left INTEGER NOT NULL )""")
 
-
+        else:
+            # if the tables already exist delete the data inside them
+            cursor.execute("DELETE FROM courses")
+            cursor.execute("DELETE FROM students")
+            cursor.execute("DELETE FROM classrooms")
 
 
 
 def insertToClassRoom(parameters, cursor):
     id = int(parameters[1])
     location = parameters[2]
-    cursor.execute("INSERT INTO classrooms VALUES(?,?)", (id, location))
+    cursor.execute("INSERT INTO classrooms VALUES(?,?,?,?)", (id, location,0,0))
 
 
 def insertToStudents(parameters, cursor):
@@ -48,7 +52,7 @@ def insertToCourses(parameters, cursor):
     numOfStudents = int(parameters[4])
     class_id = int(parameters[5])
     courseLength = int(parameters[6])
-    cursor.execute("INSERT INTO courses VALUES(?,?,?,?,?,?)", (id, courseName, student, numOfStudents, class_id, courseLength ))
+    cursor.execute("INSERT INTO courses VALUES(?,?,?,?,?,?)", (id, courseName, student, numOfStudents, class_id, courseLength))
 
 
 
@@ -61,9 +65,11 @@ def readFromFile(path):
         inputfilename = path
         with open(inputfilename) as inputfile:
             for line in inputfile:
-                splitedData = line.split(", ")
-                # INSERT TO TABLE CLASSROOM
+                splitedData = line.split(",")
                 toTable = splitedData[0]
+                for i in range(len(splitedData)):
+                    splitedData[i] = splitedData[i].strip()
+
                 if toTable == 'C':
                     insertToCourses(splitedData, cursor)
                 elif toTable == 'S':
@@ -71,9 +77,12 @@ def readFromFile(path):
                 else:
                     insertToClassRoom(splitedData, cursor)
 
+
 def main(args):
     intelizeTables()
     readFromFile(args[1])
+
+
 
 if __name__ == '__main__':
     main(sys.argv)
