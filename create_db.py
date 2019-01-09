@@ -55,7 +55,9 @@ def insertToCourses(parameters, cursor):
     cursor.execute("INSERT INTO courses VALUES(?,?,?,?,?,?)", (id, courseName, student, numOfStudents, class_id, courseLength))
 
 
-
+def print_table(list_of_tuples):
+    for item in list_of_tuples:
+        print(item)
 
 
 def readFromFile(path):
@@ -76,6 +78,16 @@ def readFromFile(path):
                     insertToStudents(splitedData, cursor)
                 else:
                     insertToClassRoom(splitedData, cursor)
+
+        cursor.execute("SELECT * FROM courses")
+        print("courses")
+        print_table(cursor.fetchall())
+        cursor.execute("SELECT * FROM classrooms")
+        print("classrooms")
+        print_table(cursor.fetchall())
+        cursor.execute("SELECT * FROM students")
+        print("students")
+        print_table(cursor.fetchall())
 
 
 def main(args):
