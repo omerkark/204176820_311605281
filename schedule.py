@@ -107,16 +107,20 @@ def main():
     clock = 0
     # take all the free classes and assgin them with courses
     fillClassesUpdateDataBase(clock)
-    while (courses_table_size(cursor) > 0):
+    if (courses_table_size(cursor) != 0):
+        while (courses_table_size(cursor) > 0):
 
+            process(cursor, clock)
 
-        process(cursor, clock)
+            # printing tables
+            print_tables(cursor)
 
-        # printing tables
+            clock = clock + 1
+    else:
         print_tables(cursor)
-
-        clock = clock + 1
 
 
 if __name__ == '__main__':
     main()
+
+dbConnection.close()
