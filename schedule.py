@@ -57,8 +57,7 @@ def print_tables(cursor):
     print_table(cursor.fetchall())
 
 def fillClassesUpdateDataBase(clock):
-    cursor.execute(
-        "SELECT * FROM classrooms as c JOIN courses ON c.id = courses.class_id WHERE current_course_time_left LIKE 0")
+    cursor.execute("SELECT * FROM classrooms as c JOIN courses ON c.id = courses.class_id WHERE current_course_time_left LIKE 0")
     # all classes free to be ocupied and courses for them.
 
     freeClassRooms = cursor.fetchall()
@@ -106,10 +105,10 @@ def courses_table_size(cursor):
 
 def main():
     clock = 0
-
+    # take all the free classes and assgin them with courses
     fillClassesUpdateDataBase(clock)
-
     while (courses_table_size(cursor) > 0):
+
 
         process(cursor, clock)
 
