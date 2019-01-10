@@ -110,6 +110,7 @@ def main():
     if (courses_table_size(cursor) != 0):
         while (courses_table_size(cursor) > 0):
 
+            # all the logic of the program
             process(cursor, clock)
 
             # printing tables
